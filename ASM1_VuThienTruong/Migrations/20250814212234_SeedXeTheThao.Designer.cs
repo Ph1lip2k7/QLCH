@@ -4,16 +4,19 @@ using ASM1_VuThienTruong.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace ASM1_VuThienTruong.Migrations
 {
-    [DbContext(typeof(WebBanHangContext))]
-    partial class WebBanHangContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20250814212234_SeedXeTheThao")]
+    partial class SeedXeTheThao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,7 +176,7 @@ namespace ASM1_VuThienTruong.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -197,6 +200,7 @@ namespace ASM1_VuThienTruong.Migrations
                         {
                             ProductId = 1,
                             CategoryId = 1,
+                            Image = "iphone13.jpg",
                             Name = "iPhone 13",
                             Price = 20000m,
                             Stock = 50
@@ -205,6 +209,7 @@ namespace ASM1_VuThienTruong.Migrations
                         {
                             ProductId = 2,
                             CategoryId = 1,
+                            Image = "galaxyS21.png",
                             Name = "Samsung Galaxy S21",
                             Price = 18000m,
                             Stock = 40
@@ -213,6 +218,7 @@ namespace ASM1_VuThienTruong.Migrations
                         {
                             ProductId = 3,
                             CategoryId = 2,
+                            Image = "oplung.jpg",
                             Name = "Ốp lưng iPhone",
                             Price = 200m,
                             Stock = 150

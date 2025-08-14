@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 namespace ASM1_VuThienTruong.Models
 {
     public class Cart
@@ -8,11 +9,10 @@ namespace ASM1_VuThienTruong.Models
         public int CartId { get; set; }
 
         public int CustomerId { get; set; }
-        public Customers Customer { get; set; }
+        public Customer Customer { get; set; }
 
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-
-        // Quan hệ 1-n: 1 Cart có nhiều CartDetail
         public ICollection<CartDetail> CartDetails { get; set; }
     }
 }
+
+

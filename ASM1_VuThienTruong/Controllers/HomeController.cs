@@ -7,9 +7,9 @@ namespace ASM1_VuThienTruong.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly WebBanHangContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(WebBanHangContext context)
+        public HomeController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -17,7 +17,7 @@ namespace ASM1_VuThienTruong.Controllers
         public async Task<IActionResult> Index()
         {
             // Lấy ra 3 sản phẩm đầu tiên từ CSDL
-            var products = await _context.Products.Take(3).ToListAsync();
+            var products = await _context.Products.ToListAsync();
             return View(products);
         }
 

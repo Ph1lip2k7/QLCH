@@ -5,19 +5,19 @@ using System.IO;
 
 namespace ASM1_VuThienTruong.Data
 {
-    public class WebBanHangContextFactory : IDesignTimeDbContextFactory<WebBanHangContext>
+    public class WebBanHangContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
     {
-        public WebBanHangContext CreateDbContext(string[] args)
+        public ApplicationDbContext CreateDbContext(string[] args)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var optionsBuilder = new DbContextOptionsBuilder<WebBanHangContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
 
-            return new WebBanHangContext(optionsBuilder.Options);
+            return new ApplicationDbContext(optionsBuilder.Options);
         }
     }
 }

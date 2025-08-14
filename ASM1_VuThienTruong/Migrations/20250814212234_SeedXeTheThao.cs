@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ASM1_VuThienTruong.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class SeedXeTheThao : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,7 +53,7 @@ namespace ASM1_VuThienTruong.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -135,12 +135,12 @@ namespace ASM1_VuThienTruong.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductId", "CategoryId", "ImageUrl", "Name", "Price", "Stock" },
+                columns: new[] { "ProductId", "CategoryId", "Image", "Name", "Price", "Stock" },
                 values: new object[,]
                 {
-                    { 1, 1, null, "iPhone 13", 20000m, 50 },
-                    { 2, 1, null, "Samsung Galaxy S21", 18000m, 40 },
-                    { 3, 2, null, "Ốp lưng iPhone", 200m, 150 }
+                    { 1, 1, "iphone13.jpg", "iPhone 13", 20000m, 50 },
+                    { 2, 1, "galaxyS21.png", "Samsung Galaxy S21", 18000m, 40 },
+                    { 3, 2, "oplung.jpg", "Ốp lưng iPhone", 200m, 150 }
                 });
 
             migrationBuilder.CreateIndex(
