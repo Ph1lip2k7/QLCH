@@ -1,8 +1,8 @@
 ﻿using ASM1_VuThienTruong.Data;
 using ASM1_VuThienTruong.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,20 +20,10 @@ namespace ASM1_VuThienTruong.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var products = await _context.Products.Include(p => p.Category).ToListAsync();
+            var products = await _context.Products
+                .Include(p => p.Category)
+                .ToListAsync();
             return View(products);
-        }
-
-        // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var product = await _context.Products.Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (product == null) return NotFound();
-
-            return View(product);
         }
 
         // GET: Products/Create
@@ -48,24 +38,14 @@ namespace ASM1_VuThienTruong.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product product)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (product.CategoryId == 0)
-                {
-                    var firstCategory = _context.Categories.FirstOrDefault();
-                    if (firstCategory != null)
-                        product.CategoryId = firstCategory.CategoryId;
-                }
-
-                _context.Products.Add(product);
+                _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                ViewBag.Categories = _context.Categories.ToList();
-                return View(product);
-            }
+            ViewBag.Categories = _context.Categories.ToList();
+            return View(product);
         }
 
         // GET: Products/Edit/5
@@ -87,17 +67,24 @@ namespace ASM1_VuThienTruong.Controllers
         {
             if (id != product.ProductId) return NotFound();
 
-            try
+            if (ModelState.IsValid)
             {
-                _context.Update(product);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Update(product);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Products.Any(e => e.ProductId == id))
+                        return NotFound();
+                    else
+                        throw;
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                ViewBag.Categories = _context.Categories.ToList();
-                return View(product);
-            }
+            ViewBag.Categories = _context.Categories.ToList();
+            return View(product);
         }
 
         // GET: Products/Delete/5
@@ -108,6 +95,7 @@ namespace ASM1_VuThienTruong.Controllers
             var product = await _context.Products
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
+
             if (product == null) return NotFound();
 
             return View(product);
@@ -119,8 +107,11 @@ namespace ASM1_VuThienTruong.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
     }

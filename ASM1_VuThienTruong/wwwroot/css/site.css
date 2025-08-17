@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -19,4 +19,8 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.text-center.mb-4 {
+    margin-top: 50px; /* hoặc 60px tùy ý */
 }
